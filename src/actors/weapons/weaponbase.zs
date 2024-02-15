@@ -7,10 +7,21 @@ details.
 
 class NoctWeapon : DoomWeapon
 {
+    int     clipsize;
+    sound   emptysound;
+
+    property ClipSize: clipsize;
+    property EmptySound: emptysound;
+
     Default
     {
         Weapon.SelectionOrder 9000;
         +WEAPON.NOALERT;
+        NoctWeapon.ClipSize 0;
+    }
+
+    bool IsInfiniteAmmo() {
+        return (sv_infiniteammo || FindInventory("PowerInfiniteAmmo", true) );
     }
 
     action void A_NoctMeleeAttack(
