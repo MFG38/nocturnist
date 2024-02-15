@@ -1,0 +1,2 @@
+build.sh eol=lf
+build.bat eol=crlf
