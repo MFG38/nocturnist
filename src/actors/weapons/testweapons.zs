@@ -100,7 +100,7 @@ class TestRocketLauncher : NoctWeapon replaces RocketLauncher
 		Loop;
 	Fire:
 		MISG B 8 A_GunFlash;
-		MISG B 12 A_NoctSpawnProjectile("Rocket");
+		MISG B 12 A_NoctFireProjectile("Rocket");
 		MISG B 0 A_ReFire;
 		Goto Ready;
 	Flash:

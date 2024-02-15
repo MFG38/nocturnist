@@ -7,17 +7,10 @@ details.
 
 class NoctWeapon : DoomWeapon
 {
-    int     clipsize;
-    sound   emptysound;
-
-    property ClipSize: clipsize;
-    property EmptySound: emptysound;
-
     Default
     {
         Weapon.SelectionOrder 9000;
         +WEAPON.NOALERT;
-        NoctWeapon.ClipSize 0;
     }
 
     bool IsInfiniteAmmo() {
@@ -45,11 +38,11 @@ class NoctWeapon : DoomWeapon
 
     action void A_NoctBulletAttack(
         int bullets, int damage, double spread_h = 0.0, double spread_v = 0.0,
-        sound atksound = "", bool alertonfire = true, class<Actor> puff = "BulletPuff"
+        sound atksound = "", bool alert = true, class<Actor> puff = "BulletPuff"
     ) {
         if (player == null) return;
 
-        if(alertonfire) A_AlertMonsters();
+        if(alert) A_AlertMonsters();
         if(atksound != "") A_StartSound(atksound, CHAN_WEAPON);
 
 		Weapon weap = player.ReadyWeapon;
@@ -71,13 +64,38 @@ class NoctWeapon : DoomWeapon
         }
     }
 
-    action void A_NoctSpawnProjectile(
+    action void A_NoctFireProjectile(
         class<Actor> projectile, double offset_x = 0.0, double offset_z = 0.0,
-        double offset_a = 0.0, sound spawnsound = "", bool alertonspawn = true
+        double offset_a = 0.0, sound spawnsound = "", bool alert = true
     ) {
         if (player == null) return;
 
-        if(alertonspawn) A_AlertMonsters();
+        if(alert) A_AlertMonsters();
+        if(spawnsound != "") A_StartSound(spawnsound, CHAN_WEAPON);
+
+		Weapon weap = player.ReadyWeapon;
+		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
+		{
+			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
+			{
+				return;
+			}
+			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
+		}
+		player.mo.PlayAttacking2();
+
+        SpawnPlayerMissile(projectile, angle + offset_a, offset_x, 0, offset_z);
+    }
+
+    // A copy of the above function with an extra argument for limited alert radius.
+    action void A_NoctFireProjectile2(
+        class<Actor> projectile, double offset_x = 0.0, double offset_z = 0.0,
+        double offset_a = 0.0, sound atksound = "", bool alert = true,
+        int alertradius = 512
+    ) {
+        if (player == null) return;
+
+        if(alert) A_AlertMonsters(alertradius);
         if(spawnsound != "") A_StartSound(spawnsound, CHAN_WEAPON);
 
 		Weapon weap = player.ReadyWeapon;
