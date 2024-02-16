@@ -66,12 +66,12 @@ class NoctWeapon : DoomWeapon
 
     action void A_NoctFireProjectile(
         class<Actor> projectile, double offset_x = 0.0, double offset_z = 0.0,
-        double offset_a = 0.0, sound spawnsound = "", bool alert = true
+        double offset_a = 0.0, sound atksound = "", bool alert = true
     ) {
         if (player == null) return;
 
         if(alert) A_AlertMonsters();
-        if(spawnsound != "") A_StartSound(spawnsound, CHAN_WEAPON);
+        if(atksound != "") A_StartSound(atksound, CHAN_WEAPON);
 
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
@@ -96,7 +96,7 @@ class NoctWeapon : DoomWeapon
         if (player == null) return;
 
         if(alert) A_AlertMonsters(alertradius);
-        if(spawnsound != "") A_StartSound(spawnsound, CHAN_WEAPON);
+        if(atksound != "") A_StartSound(atksound, CHAN_WEAPON);
 
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)

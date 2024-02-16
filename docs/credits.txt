@@ -1,0 +1,8 @@
+===============
+== SCRIPTING ==
+===============
+
+All scripting (with exceptions listed below): MFG38
+
+This project uses the following third-party scripts/libraries:
+    ZScript HUDMessage by Agent_Ash aka Jekyll Grim Payne
