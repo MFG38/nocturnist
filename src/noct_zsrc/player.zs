@@ -92,4 +92,12 @@ class Nocturnist : PlayerPawn
 		PLAY Y -1;
 		Stop;
 	}
+
+    // Basic one-liner functions that return a boolean value based
+    // on player movement. At least one of these will be useful.
+    private bool IsMoving()     { return vel.x != 0; }
+    private bool IsStrafing()   { return vel.y != 0; }
+    private bool IsJumping()    { return vel.z > 0; }
+    private bool IsFalling()    { return vel.z < 0; }
+    private bool IsOnGround()   { return pos.z == floorz; }
 }

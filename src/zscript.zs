@@ -1,6 +1,11 @@
 version "4.5"
 
-#include "actors/player.zs"
+// Third-party stuff
+#include "noct_zsrc/zshudmsg/hudmsg.zs"
 
-#include "actors/weapons/weaponbase.zs"
-#include "actors/weapons/testweapons.zs"
+// Player
+#include "noct_zsrc/player.zs"
+
+// Weapons
+#include "noct_zsrc/weapons/weaponbase.zs"
+#include "noct_zsrc/weapons/testweapons.zs"
