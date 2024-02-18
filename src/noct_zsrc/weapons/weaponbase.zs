@@ -38,7 +38,7 @@ class NoctWeapon : DoomWeapon
 
     action void A_NoctBulletAttack(
         int bullets, int damage, double spread_h = 0.0, double spread_v = 0.0,
-        sound atksound = "", bool alert = true, class<Actor> puff = "BulletPuff"
+        sound atksound = "", bool useammo = true, bool alert = true, class<Actor> puff = "BulletPuff"
     ) {
         if (player == null) return;
 
@@ -48,10 +48,7 @@ class NoctWeapon : DoomWeapon
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
-			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
-			{
-				return;
-			}
+			if (useammo) weap.DepleteAmmo (weap.bAltFire, true, -1);
 			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
 		}
 		player.mo.PlayAttacking2();
@@ -65,8 +62,8 @@ class NoctWeapon : DoomWeapon
     }
 
     action void A_NoctFireProjectile(
-        class<Actor> projectile, double offset_x = 0.0, double offset_z = 0.0,
-        double offset_a = 0.0, sound atksound = "", bool alert = true
+        class<Actor> projectile, double offset_x = 0.0, double offset_y = 0.0, double offset_z = 0.0,
+        double offset_a = 0.0, sound atksound = "", bool useammo = true, bool alert = true
     ) {
         if (player == null) return;
 
@@ -76,21 +73,18 @@ class NoctWeapon : DoomWeapon
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
-			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
-			{
-				return;
-			}
+			if (useammo) weap.DepleteAmmo (weap.bAltFire, true, -1);
 			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
 		}
 		player.mo.PlayAttacking2();
 
-        SpawnPlayerMissile(projectile, angle + offset_a, offset_x, 0, offset_z);
+        SpawnPlayerMissile(projectile, angle + offset_a, offset_x, offset_y, offset_z);
     }
 
     // A copy of the above function with an extra argument for limited alert radius.
     action void A_NoctFireProjectile2(
-        class<Actor> projectile, double offset_x = 0.0, double offset_z = 0.0,
-        double offset_a = 0.0, sound atksound = "", bool alert = true,
+        class<Actor> projectile, double offset_x = 0.0, double offset_y = 0.0, double offset_z = 0.0,
+        double offset_a = 0.0, sound atksound = "", bool useammo = true, bool alert = true,
         int alertradius = 512
     ) {
         if (player == null) return;
@@ -101,14 +95,11 @@ class NoctWeapon : DoomWeapon
 		Weapon weap = player.ReadyWeapon;
 		if (weap != null && invoker == weap && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
-			if (!weap.DepleteAmmo (weap.bAltFire, true, 1))
-			{
-				return;
-			}
+			if (useammo) weap.DepleteAmmo (weap.bAltFire, true, -1);
 			player.SetPsprite(PSP_FLASH, weap.FindState('Flash'), true);
 		}
 		player.mo.PlayAttacking2();
 
-        SpawnPlayerMissile(projectile, angle + offset_a, offset_x, 0, offset_z);
+        SpawnPlayerMissile(projectile, angle + offset_a, offset_x, offset_y, offset_z);
     }
 }
